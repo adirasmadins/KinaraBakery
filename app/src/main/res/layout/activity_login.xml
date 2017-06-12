@@ -1,0 +1,66 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                layout="@layout/toobar_layout"
+                android:id="@+id/toolbar"
+                />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="129dp"
+                android:padding="16dp"
+                android:id="@+id/textInputLayoutusername">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etusername"
+                    android:padding="16dp"
+                    android:hint="Username" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textInputLayoutusername"
+                app:passwordToggleEnabled="true"
+                android:padding="16dp"
+                android:id="@+id/textInputLayoutpassword">
+
+                <EditText
+                    android:id="@+id/etpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/loginbtn"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff"
+                android:background="@color/colorPrimary"
+                android:text="Login"
+                android:padding="16dp"
+                android:layout_marginTop="35dp"
+                android:layout_below="@+id/textInputLayoutpassword"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/siguup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign up"
+                android:background="@null"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/loginbtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="28dp" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

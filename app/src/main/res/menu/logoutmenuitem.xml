@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_logout"
+            android:title="Log Out"
+            android:orderInCategory="100"
+            android:icon="@drawable/logout"
+            />
+        <item
+            android:id="@+id/shoppingcart"
+            android:title="Shopping Cart"
+            android:icon="@drawable/ic_orders"
+            android:orderInCategory="101"
+
+            app:showAsAction="always"
+            />
+        <item
+            android:id="@+id/profile"
+            android:title="Profile"
+            app:showAsAction="never"
+            android:icon="@drawable/profilepic"
+            />
+        <item
+            android:id="@+id/track_orders"
+            android:orderInCategory="102"
+            android:title="Track Orders"
+            app:showAsAction="never"/>
+    </group>
+
+
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowTransitionBackgroundFadeDuration">5000</item>
+        <item name="android:windowEnterTransition">@transition/transition</item>
+        <item name="android:windowExitTransition">@transition/transition</item>
+    </style>
+</resources>

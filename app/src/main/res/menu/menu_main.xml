@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="usmanali.kinarabakery.MainActivity">
+    <item
+        android:id="@+id/action_signup"
+        android:title="Sign Up"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_signup"
+        />
+    <item
+        android:id="@+id/Login"
+        android:title="Log In"
+        app:showAsAction="never"
+        android:icon="@drawable/login"
+        />
+    <item
+        android:id="@+id/addproducts"
+        android:title="Add products"
+        app:showAsAction="never"
+/>
+
+
+</menu>
+
