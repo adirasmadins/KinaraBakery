@@ -50,12 +50,11 @@ public void track(String Username){
         @Override
         public void onResponse(Call<ArrayList<orders>> call, Response<ArrayList<orders>> response) {
             ArrayList<orders> ordersdetail=response.body();
-            tabledata= new String[ordersdetail.size()][4];
+            tabledata= new String[ordersdetail.size()][3];
             orders orderinfo;
             for(int i=0; i<ordersdetail.size();i++){
                 orderinfo=ordersdetail.get(i);
                 tabledata[i][0]= String.valueOf(orderinfo.getOrderid());
-                tabledata[i][1]= orderinfo.getItems();
                 tabledata[i][2] = orderinfo.getPrice();
                 tabledata[i][3]= orderinfo.getOrderdatetime();
                 tb.setDataAdapter(new SimpleTableDataAdapter(Track_orders.this,tabledata));
