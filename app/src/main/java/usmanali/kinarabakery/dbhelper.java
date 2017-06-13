@@ -66,10 +66,10 @@ sqLiteDatabase.execSQL(creat_table);
 
     public int getTotalOfAmount(String Username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query("shoppingcart",pricecolumn,"Username = ?",new String[] {Username},null,null,null,null);
-        c.moveToFirst();
-        int i = c.getInt(0);
-        c.close();
+        Cursor cur = db.query("shoppingcart",pricecolumn,"Username = ?",new String[] {Username},null,null,null,null);
+        cur.moveToFirst();
+        int i = cur.getInt(0);
+        cur.close();
         return i;
     }
     public Integer delete(String id){
