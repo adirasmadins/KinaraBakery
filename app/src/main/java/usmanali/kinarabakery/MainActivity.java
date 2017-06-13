@@ -218,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(id==R.id.addproducts){
             startActivity(new Intent(MainActivity.this,add_products_activity.class));
+
         }if(id==R.id.track_orders){
             startActivity(new Intent(MainActivity.this,Track_orders.class));
         }

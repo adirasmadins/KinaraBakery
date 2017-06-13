@@ -42,21 +42,16 @@ placingorders(){
 
       kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
       Call<String>  call=service.place_orders(Name,Username,Phone,Address,Email,itemname,price,DateTime);
-      final ProgressDialog pd=new ProgressDialog(context);
-      pd.setMessage("Please Wait");
-      pd.show();
       call.enqueue(new Callback<String>() {
           @Override
           public void onResponse(Call<String> call, Response<String> response) {
            String status=response.body();
               Toast.makeText(context,status,Toast.LENGTH_LONG).show();
-              pd.dismiss();
           }
 
           @Override
           public void onFailure(Call<String> call, Throwable t) {
               Log.e("orderplacingFailure",t.toString());
-              pd.dismiss();
           }
       });
   }

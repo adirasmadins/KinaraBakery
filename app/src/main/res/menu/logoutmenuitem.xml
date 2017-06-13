@@ -13,7 +13,6 @@
             android:title="Shopping Cart"
             android:icon="@drawable/ic_orders"
             android:orderInCategory="101"
-
             app:showAsAction="always"
             />
         <item

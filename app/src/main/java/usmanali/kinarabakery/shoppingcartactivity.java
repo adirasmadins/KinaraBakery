@@ -84,9 +84,8 @@ public class shoppingcartactivity extends AppCompatActivity {
                         // smssender.sendTextMessage(
                         //
                         // "phone","Kinara Bakery","Dear "+customername+"\n"+"You have ordered "+"\n"+sb.toString()+"\n"+"You will recieve Order Soon",null,null);*/
-
+                        new placingorders().place_orders(customername, Username, Address, phone, Email, sb.toString(),String.valueOf(mydb.getTotalOfAmount(Username)), shoppingcartactivity.this,DateTime);
                             mydb.delete_all(Username);
-                            new placingorders().place_orders(customername, Username, Address, phone, Email, sb.toString(),String.valueOf(mydb.getTotalOfAmount()), shoppingcartactivity.this,DateTime);
                             startActivity(new Intent(shoppingcartactivity.this, MainActivity.class));
                             finish();
 

@@ -19,7 +19,7 @@ import java.util.List;
 public class dbhelper extends SQLiteOpenHelper {
     Context c;
     String Table_Name="shoppingcart";
-    String[] pricecolumn={"price"};
+    String[] pricecolumn={"Sum(price)"};
     String[] columns={"id","productname","price","image","quantity","Username"};
     String creat_table="create table shoppingcart (id integer primary key autoincrement,productname text,price integer,image text,quantity integer,Username text);";
     public dbhelper(Context context) {
@@ -64,9 +64,9 @@ sqLiteDatabase.execSQL(creat_table);
         return numberofrows;
     }
 
-    public int getTotalOfAmount() {
+    public int getTotalOfAmount(String Username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT SUM(price) FROM " + Table_Name, null);
+        Cursor c = db.query("shoppingcart",pricecolumn,"Username = ?",new String[] {Username},null,null,null,null);
         c.moveToFirst();
         int i = c.getInt(0);
         c.close();
