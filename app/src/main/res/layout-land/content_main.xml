@@ -59,7 +59,7 @@
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_list"
+                android:id="@+id/allitemslist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -80,14 +80,14 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_toStartOf="@+id/btnMore2"
+                    android:layout_toStartOf="@+id/moredeserts"
                     android:text="Deserts"
                     android:paddingLeft="15dp"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
 
                 <Button
-                    android:id="@+id/btnMore2"
+                    android:id="@+id/moredeserts"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
@@ -100,7 +100,7 @@
                     android:textColor="#ffff" />
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_list2"
+                android:id="@+id/desertslist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -121,14 +121,14 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_toLeftOf="@+id/btnMore3"
+                    android:layout_toLeftOf="@+id/morerusks"
                     android:text="Rusks"
                     android:paddingLeft="15dp"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
 
                 <Button
-                    android:id="@+id/btnMore3"
+                    android:id="@+id/morerusks"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
                     android:layout_alignParentEnd="true"
@@ -140,7 +140,7 @@
                     android:textColor="#ffff" />
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_list3"
+                android:id="@+id/ruskslist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -161,13 +161,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_toStartOf="@+id/btnMore4"
+                    android:layout_toStartOf="@+id/moremethai"
                     android:text="Methai"
                     android:paddingLeft="15dp"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
                 <Button
-                    android:id="@+id/btnMore4"
+                    android:id="@+id/moremethai"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
@@ -180,7 +180,7 @@
                     android:textColor="#ffff" />
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_list4"
+                android:id="@+id/methailist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -200,13 +200,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_toStartOf="@+id/btnMore5"
+                    android:layout_toStartOf="@+id/morebreadsandbuns"
                     android:text="Breads and Buns"
                     android:paddingLeft="15dp"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
                 <Button
-                    android:id="@+id/btnMore5"
+                    android:id="@+id/morebreadsandbuns"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
@@ -219,7 +219,7 @@
                     android:textColor="#ffff" />
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_list5"
+                android:id="@+id/breadandbunslist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"

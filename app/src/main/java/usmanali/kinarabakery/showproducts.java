@@ -34,7 +34,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
     Retrofit retrofit;
     kinarabakeryservice service;
     Context context;
-
     public showproducts(Context context){
     productsArrayList=new ArrayList<products>();
          service=apiclient.getClient().create(kinarabakeryservice.class);

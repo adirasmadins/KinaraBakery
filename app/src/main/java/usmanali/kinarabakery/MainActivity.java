@@ -1,10 +1,12 @@
 package usmanali.kinarabakery;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -50,24 +52,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static usmanali.kinarabakery.R.drawable.profilepic;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    @BindView(R.id.recycler_view_list)
+    @BindView(R.id.allitemslist)
     RecyclerView productslist;
-    @BindView(R.id.recycler_view_list2)
+    @BindView(R.id.desertslist)
     RecyclerView Cakeslist;
-    @BindView(R.id.recycler_view_list3)
+    @BindView(R.id.ruskslist)
     RecyclerView Rusklist;
-    @BindView(R.id.recycler_view_list4)
+    @BindView(R.id.methailist)
     RecyclerView methailist;
-    @BindView(R.id.recycler_view_list5) RecyclerView breadsandbunslist;
+    @BindView(R.id.breadandbunslist) RecyclerView breadsandbunslist;
     @BindView(R.id.btnMore)
     Button btnmore;
-    @BindView(R.id.btnMore2)
+    @BindView(R.id.moredeserts)
     Button btnMore2;
-    @BindView(R.id.btnMore3)
+    @BindView(R.id.morerusks)
     Button btnMore3;
-    @BindView(R.id.btnMore4)
+    @BindView(R.id.moremethai)
     Button btnmore4;
-    @BindView(R.id.btnMore5)
+    @BindView(R.id.morebreadsandbuns)
     Button btnmore5;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         add_images_to_carousel();
         setSupportActionBar(toolbar);
+        isNetworkConnected();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         Islogin = prefs.getBoolean("Islogin", false);
         nameofcustomer = prefs.getString("Name", "Guest");
@@ -151,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         productsArrayList = new ArrayList<>();
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerlayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerlayout.setDrawerListener(actionBarDrawerToggle);
-
         btnmore.setOnClickListener(this);
         btnMore2.setOnClickListener(this);
         btnMore3.setOnClickListener(this);
@@ -247,12 +249,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnMore2) {
+        if (view.getId() == R.id.moredeserts) {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Deserts");
             startActivity(i, optionsCompat.toBundle());
-        } else if (view.getId() == R.id.btnMore3) {
+        } else if (view.getId() == R.id.morerusks) {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Rusks");
@@ -262,12 +264,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "All Products");
             startActivity(i, optionsCompat.toBundle());
-        }else if(view.getId()==R.id.btnMore4){
+        }else if(view.getId()==R.id.moremethai){
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Methai");
             startActivity(i, optionsCompat.toBundle());
-        }else if(view.getId()==R.id.btnMore5) {
+        }else if(view.getId()==R.id.morebreadsandbuns) {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Breads & Buns");
@@ -282,6 +284,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         carouselimages.add(R.drawable.cookie);
         carouselimages.add(R.drawable.rusks);
         carouselpager.setAdapter(new carouseladapter(MainActivity.this, carouselimages));
+    }
+    private void isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+           if(cm.getActiveNetworkInfo()!=null && cm.getActiveNetworkInfo().isConnected()){
+
+           }else {
+               AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+               builder.setTitle("Kinara Bakery");
+               builder.setMessage("You are not connected to the Network");
+               builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialogInterface, int i) {
+                       finish();
+                   }
+               }).show();
+           }
+
     }
 
 }
