@@ -79,16 +79,16 @@ public class shoppingcartactivity extends AppCompatActivity {
                         StringBuffer sb = new StringBuffer();
                         while (res.moveToNext()) {
                             sb.append(res.getString(1) + " ");
-                            sb.append("X"+ res.getInt(4) + " "+"\n");
+                            sb.append("x"+ res.getInt(4) + " "+"\n");
                         }
                         // smssender.sendTextMessage(
                         //
                         // "phone","Kinara Bakery","Dear "+customername+"\n"+"You have ordered "+"\n"+sb.toString()+"\n"+"You will recieve Order Soon",null,null);*/
                         new placingorders().place_orders(customername, Username, Address, phone, Email, sb.toString(),String.valueOf(mydb.getTotalOfAmount(Username)), shoppingcartactivity.this,DateTime);
+                        new sendmail(shoppingcartactivity.this,Email,"Your Order has been Recieved","Dear "+customername+"\n"+"\n"+"You have ordered "+"\n"+"\n"+sb.toString()+"\n"+"\n"+"Your Total bill is Rs "+String.valueOf(mydb.getTotalOfAmount(Username))+"\n"+"You will recieve Order Soon").execute();
                             mydb.delete_all(Username);
                             startActivity(new Intent(shoppingcartactivity.this, MainActivity.class));
                             finish();
-
                     }
                     return false;
                 }
