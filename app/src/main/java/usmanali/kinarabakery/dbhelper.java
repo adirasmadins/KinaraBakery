@@ -58,10 +58,10 @@ sqLiteDatabase.execSQL(creat_table);
         Cursor products=db.query("shoppingcart",columns,"Username = ?",new String[]{Username},null,null,null,null);
         return products;
     }
-    public int get_num_of_rows(){
-        SQLiteDatabase db=getReadableDatabase();
-        int numberofrows=(int) DatabaseUtils.queryNumEntries(db,"shoppingcart");
-        return numberofrows;
+    public int get_num_of_rows(String Username){
+        SQLiteDatabase db= getReadableDatabase();
+        Cursor products=db.query("shoppingcart",columns,"Username = ?",new String[]{Username},null,null,null,null);
+        return products.getCount();
     }
 
     public int getTotalOfAmount(String Username) {

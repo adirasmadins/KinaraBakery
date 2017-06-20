@@ -13,6 +13,7 @@
             android:title="Shopping Cart"
             android:icon="@drawable/ic_orders"
             android:orderInCategory="101"
+            app:actionLayout="@layout/menu_badge_layout"
             app:showAsAction="always"
             />
         <item
@@ -25,6 +26,7 @@
             android:id="@+id/track_orders"
             android:orderInCategory="102"
             android:title="Track Orders"
+            android:icon="@drawable/track"
             app:showAsAction="never"/>
     </group>
 

@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String productname, price;
     TextView customername;
     TextView email;
-    dbhelper mydb;
+    TextView textview;
     ImageView letterimg;
     Intent i;
     showproducts sp;
@@ -91,12 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<products> productsArrayList;
     ActionBarDrawerToggle actionBarDrawerToggle;
     String nameofcustomer, Username;
-
+    dbhelper mydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         add_images_to_carousel();
         setSupportActionBar(toolbar);
         isNetworkConnected();
@@ -105,36 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nameofcustomer = prefs.getString("Name", "Guest");
         Username = prefs.getString("Username", "Guest");
         mydb = new dbhelper(MainActivity.this);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.action_logout) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                    prefs.edit().remove("Islogin").commit();
-                    prefs.edit().remove("Name").commit();
-                    prefs.edit().remove("Email").commit();
-                    prefs.edit().remove("Username").commit();
-                    prefs.edit().remove("Phone").commit();
-                    prefs.edit().remove("Address").commit();
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-                    startActivity(new Intent(MainActivity.this, MainActivity.class), optionsCompat.toBundle());
-                    finish();
-                } else if (item.getItemId() == R.id.action_signup) {
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-                    startActivity(new Intent(MainActivity.this, signupactivity.class), optionsCompat.toBundle());
-                } else if (item.getItemId() == R.id.Login) {
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class), optionsCompat.toBundle());
-                } else if (item.getItemId() == R.id.shoppingcart) {
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-                    startActivity(new Intent(MainActivity.this, shoppingcartactivity.class), optionsCompat.toBundle());
-                } else if (item.getItemId() == R.id.profile) {
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-                    startActivity(new Intent(MainActivity.this, customerprofileactivity.class), optionsCompat.toBundle());
-                }
-                return false;
-            }
-        });
+        nav_item_click();
         View header = nv.inflateHeaderView(R.layout.headerlayout);
         customername = (TextView) header.findViewById(R.id.name);
         email = (TextView) header.findViewById(R.id.Email);
@@ -148,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         email.setText("@"+Username);
         if (Islogin) {
             nv.inflateMenu(R.menu.logoutmenuitem);
+            textview = (TextView) nv.getMenu().findItem(R.id.shoppingcart).getActionView();
+            //textview.setText(String.valueOf(new dbhelper(MainActivity.this).get_num_of_rows(Username)));
+
         } else {
             nv.inflateMenu(R.menu.menu_main);
         }
@@ -159,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMore3.setOnClickListener(this);
         btnmore4.setOnClickListener(this);
         btnmore5.setOnClickListener(this);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         productslist.setLayoutManager(layoutManager);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
@@ -179,53 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sp.show_list_of_breadandbuns(breadsandbunslist,MainActivity.this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if (Islogin)
-            getMenuInflater().inflate(R.menu.logoutmenuitem, menu);
-        else if (!Islogin) {
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-        }
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_signup) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-            startActivity(new Intent(MainActivity.this, signupactivity.class), optionsCompat.toBundle());
-            return true;
-        }
-        if (id == R.id.Login) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-            startActivity(new Intent(MainActivity.this, LoginActivity.class), optionsCompat.toBundle());
-        }
-        if (id == R.id.shoppingcart) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-            startActivity(new Intent(MainActivity.this, shoppingcartactivity.class), optionsCompat.toBundle());
-        }
-        if (id == R.id.action_logout) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            prefs.edit().remove("Islogin").commit();
-            prefs.edit().remove("Name").commit();
-            prefs.edit().remove("Email").commit();
-            prefs.edit().remove("Username").commit();
-            prefs.edit().remove("Phone").commit();
-            prefs.edit().remove("Address").commit();
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
-            startActivity(new Intent(MainActivity.this, MainActivity.class), optionsCompat.toBundle());
-            finish();
-        }
-        if(id==R.id.addproducts){
-            startActivity(new Intent(MainActivity.this,add_products_activity.class));
-
-        }if(id==R.id.track_orders){
-            startActivity(new Intent(MainActivity.this,Track_orders.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -246,7 +175,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }, 10000);
     }
-
+public void nav_item_click(){
+    nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (item.getItemId() == R.id.action_logout) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                prefs.edit().remove("Islogin").commit();
+                prefs.edit().remove("Name").commit();
+                prefs.edit().remove("Email").commit();
+                prefs.edit().remove("Username").commit();
+                prefs.edit().remove("Phone").commit();
+                prefs.edit().remove("Address").commit();
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, MainActivity.class), optionsCompat.toBundle());
+                finish();
+            } else if (item.getItemId() == R.id.action_signup) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, signupactivity.class), optionsCompat.toBundle());
+            } else if (item.getItemId() == R.id.Login) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class), optionsCompat.toBundle());
+            } else if (item.getItemId() == R.id.shoppingcart) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, shoppingcartactivity.class), optionsCompat.toBundle());
+            } else if (item.getItemId() == R.id.profile) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, customerprofileactivity.class), optionsCompat.toBundle());
+            }
+            return false;
+        }
+    });
+}
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.moredeserts) {
@@ -274,6 +234,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Breads & Buns");
             startActivity(i, optionsCompat.toBundle());
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(Islogin) {
+            textview.setText(String.valueOf(new dbhelper(MainActivity.this).get_num_of_rows(Username)));
         }
     }
 
