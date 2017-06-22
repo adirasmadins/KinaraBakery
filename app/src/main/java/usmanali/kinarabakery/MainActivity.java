@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -37,6 +40,8 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
+import com.mikepenz.iconics.typeface.GenericFont;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -50,7 +55,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static usmanali.kinarabakery.R.drawable.ic_orders;
 import static usmanali.kinarabakery.R.drawable.profilepic;
+import static usmanali.kinarabakery.R.id.shoppingcart;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @BindView(R.id.allitemslist)
@@ -93,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     String nameofcustomer, Username;
     dbhelper mydb;
+    Menu menuItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         add_images_to_carousel();
         setSupportActionBar(toolbar);
         isNetworkConnected();
@@ -107,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nameofcustomer = prefs.getString("Name", "Guest");
         Username = prefs.getString("Username", "Guest");
         mydb = new dbhelper(MainActivity.this);
+
         nav_item_click();
         View header = nv.inflateHeaderView(R.layout.headerlayout);
         customername = (TextView) header.findViewById(R.id.name);
@@ -120,12 +128,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         customername.setText(nameofcustomer);
         email.setText("@"+Username);
         if (Islogin) {
-            nv.inflateMenu(R.menu.logoutmenuitem);
-            textview = (TextView) nv.getMenu().findItem(R.id.shoppingcart).getActionView();
+            nv.inflateMenu(R.menu.authenticateduser_menu);
+            textview = (TextView) nv.getMenu().findItem(shoppingcart).getActionView();
             //textview.setText(String.valueOf(new dbhelper(MainActivity.this).get_num_of_rows(Username)));
 
         } else {
-            nv.inflateMenu(R.menu.menu_main);
+            nv.inflateMenu(R.menu.unauthenticateduser_menu);
         }
         productsArrayList = new ArrayList<>();
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerlayout, toolbar, R.string.drawer_open, R.string.drawer_close);
@@ -175,7 +183,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }, 10000);
     }
-public void nav_item_click(){
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(Islogin) {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActionItemBadge.update(this, menu.findItem(R.id.shoppingcart), getDrawable(R.drawable.ic_orders), ActionItemBadge.BadgeStyles.BLUE, mydb.get_num_of_rows(Username));
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.shoppingcart){
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+            startActivity(new Intent(MainActivity.this, shoppingcartactivity.class), optionsCompat.toBundle());
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void nav_item_click(){
     nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -196,7 +225,7 @@ public void nav_item_click(){
             } else if (item.getItemId() == R.id.Login) {
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
                 startActivity(new Intent(MainActivity.this, LoginActivity.class), optionsCompat.toBundle());
-            } else if (item.getItemId() == R.id.shoppingcart) {
+            } else if (item.getItemId() == shoppingcart) {
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
                 startActivity(new Intent(MainActivity.this, shoppingcartactivity.class), optionsCompat.toBundle());
             } else if (item.getItemId() == R.id.profile) {
@@ -242,6 +271,7 @@ public void nav_item_click(){
         super.onStart();
         if(Islogin) {
             textview.setText(String.valueOf(new dbhelper(MainActivity.this).get_num_of_rows(Username)));
+           invalidateOptionsMenu();
         }
     }
 
