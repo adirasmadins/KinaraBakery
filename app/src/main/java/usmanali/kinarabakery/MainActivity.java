@@ -20,6 +20,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -154,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager5 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         breadsandbunslist.setLayoutManager(layoutManager5);
         sp = new showproducts(MainActivity.this);
-
         sp.show_list_of_rusks(Rusklist, MainActivity.this);
         sp.show_list_of_deserts(Cakeslist, MainActivity.this);
         sp.show_all_products(productslist, MainActivity.this);
@@ -188,9 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         if(Islogin) {
             getMenuInflater().inflate(R.menu.menu_main, menu);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActionItemBadge.update(this, menu.findItem(R.id.shoppingcart), getDrawable(R.drawable.ic_orders), ActionItemBadge.BadgeStyles.BLUE, mydb.get_num_of_rows(Username));
-            }
+                ActionItemBadge.update(MainActivity.this, menu.findItem(R.id.shoppingcart), ContextCompat.getDrawable(MainActivity.this,R.drawable.ic_orders), ActionItemBadge.BadgeStyles.BLUE, mydb.get_num_of_rows(Username));
         }
         return super.onCreateOptionsMenu(menu);
     }
