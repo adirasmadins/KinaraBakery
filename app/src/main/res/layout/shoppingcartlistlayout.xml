@@ -60,6 +60,7 @@
             android:background="@color/colorPrimary"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:drawableStart="@drawable/ic_remove_from_cart"
             android:text="Remove from Cart"
             android:textColor="#ffff" />
     </RelativeLayout>

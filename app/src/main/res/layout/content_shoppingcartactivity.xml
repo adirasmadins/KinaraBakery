@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="Check Out"
-        android:drawableLeft="@drawable/ic_orders"
         android:textColor="#ffff"
         android:background="@color/colorPrimary"/>
 </RelativeLayout>
