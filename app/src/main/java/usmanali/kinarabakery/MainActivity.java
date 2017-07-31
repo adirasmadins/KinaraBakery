@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnmore4;
     @BindView(R.id.morebreadsandbuns)
     Button btnmore5;
+    @BindView(R.id.moregrocery)Button btnmore6;
+    @BindView(R.id.grocerylist) RecyclerView grocerylist;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_view)
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMore3.setOnClickListener(this);
         btnmore4.setOnClickListener(this);
         btnmore5.setOnClickListener(this);
+        btnmore6.setOnClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         productslist.setLayoutManager(layoutManager);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
@@ -146,11 +149,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager5 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         breadsandbunslist.setLayoutManager(layoutManager5);
         sp = new showproducts(MainActivity.this);
-        sp.show_list_of_rusks(Rusklist, MainActivity.this);
-        sp.show_list_of_deserts(Cakeslist, MainActivity.this);
+        sp.show_product_by_catorgery(Rusklist, MainActivity.this,"Rusks");
+        sp.show_product_by_catorgery(Cakeslist, MainActivity.this,"Deserts");
         sp.show_all_products(productslist, MainActivity.this);
-        sp.show_list_of_methai(methailist,MainActivity.this);
-        sp.show_list_of_breadandbuns(breadsandbunslist,MainActivity.this);
+        sp.show_product_by_catorgery(methailist,MainActivity.this,"Methai");
+        sp.show_product_by_catorgery(breadsandbunslist,MainActivity.this,"Breads & Buns");
     }
 
 
@@ -257,6 +260,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Breads & Buns");
+            startActivity(i, optionsCompat.toBundle());
+        }else if(view.getId()==R.id.moregrocery){
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+            i = new Intent(MainActivity.this, showmoreproducts.class);
+            i.putExtra("Catorgery", "Grocery");
             startActivity(i, optionsCompat.toBundle());
         }
     }

@@ -39,36 +39,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
          service=apiclient.getClient().create(kinarabakeryservice.class);
         this.context=context;
     }
-    public void show_list_of_rusks(final RecyclerView productslist, final Context c){
-        Call<ArrayList<products>> call=service.get_rusks();
-        call.enqueue(new Callback<ArrayList<products>>() {
-            @Override
-            public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
-               ArrayList<products> productsArrayList=response.body();
-                productslist.setAdapter( new adapter(productsArrayList,c));
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<products>> call, Throwable t) {
-                Log.e("Retrofit",t.toString());
-            }
-        });
-    }
-    public void show_list_of_deserts(final RecyclerView cakeslist, final Context con){
-        Call<ArrayList<products>> call=service.get_cakes();
-        call.enqueue(new Callback<ArrayList<products>>() {
-            @Override
-            public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
-                ArrayList<products>listofcakes=response.body();
-                cakeslist.setAdapter(new adapter(listofcakes,con));
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<products>> call, Throwable t) {
-
-            }
-        });
-    }
     public void show_all_products(final RecyclerView allproductslist, final Context con){
         Call<ArrayList<products>> call=service.getallproducts();
         call.enqueue(new Callback<ArrayList<products>>() {
@@ -112,7 +82,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
         });
     }
-    public   void fetch_all_products(final SearchView searchView, final RecyclerView allproductslist, final Context context){//for more products page
+    public  void fetch_all_products(final SearchView searchView, final RecyclerView allproductslist, final Context context){//for more products page
         Call<ArrayList<products>> call=service.getallproducts();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
@@ -152,35 +122,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
         }
         return productsincart;
     }
-public void show_list_of_methai(final RecyclerView methailist, final Context context) {
-    Call<ArrayList<products>> call = service.get_methai();
-    call.enqueue(new Callback<ArrayList<products>>() {
-        @Override
-        public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
-            ArrayList<products> methai = response.body();
-            methailist.setAdapter(new adapter(methai, context));
-        }
+    public void show_product_by_catorgery(final RecyclerView productsbycatorgeryrecyclerview, final Context con, String Catorgery){
+        Call<ArrayList<products>> call=service.getproductsbycatorgery(Catorgery);
+        call.enqueue(new Callback<ArrayList<products>>() {
+            @Override
+            public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
+                ArrayList<products> productsbycatorgerylist= response.body();
+                productsbycatorgeryrecyclerview.setAdapter(new adapter(productsbycatorgerylist,con));
+            }
 
-        @Override
-        public void onFailure(Call<ArrayList<products>> call, Throwable t) {
-            Log.e("get_methai", t.toString());
-        }
-    });
-}
-public void show_list_of_breadandbuns(final RecyclerView breadandbunslist, final Context context){
-    Call<ArrayList<products>> call=service.get_breadsandbuns();
-    call.enqueue(new Callback<ArrayList<products>>() {
-        @Override
-        public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
-            ArrayList<products> breadsandbunslist=response.body();
-            breadandbunslist.setAdapter(new adapter(breadsandbunslist,context));
-        }
+            @Override
+            public void onFailure(Call<ArrayList<products>> call, Throwable t) {
 
-        @Override
-        public void onFailure(Call<ArrayList<products>> call, Throwable t) {
-            Log.e("breads",t.toString());
-        }
-    });
-}
+            }
+        });
+    }
+
 
 }
