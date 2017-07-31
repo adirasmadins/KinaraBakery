@@ -5,42 +5,35 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-
 import java.util.ArrayList;
-
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static usmanali.kinarabakery.R.id.tableView;
+
 
 public class Track_orders extends AppCompatActivity {
-    String[] tableheaders={"Orderid","Items","Price","Orderdatetime"};
-    String[][] tabledata;
-    TableView<String[]> tb;
+ @BindView(R.id.orderslist) RecyclerView orderlist;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     String Username;
     kinarabakeryservice service;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_orders);
+        ButterKnife.bind(this);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Track_orders.this);
         Username = prefs.getString("Username", "Guest");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tb = (TableView<String[]>) findViewById(tableView);
-        tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.TRANSPARENT);
-        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(Track_orders.this,tableheaders));
+        orderlist.setLayoutManager(new GridLayoutManager(this,2));
         track(Username);
     }
 public void track(String Username){
@@ -50,15 +43,7 @@ public void track(String Username){
         @Override
         public void onResponse(Call<ArrayList<orders>> call, Response<ArrayList<orders>> response) {
             ArrayList<orders> ordersdetail=response.body();
-            tabledata= new String[ordersdetail.size()][3];
-            orders orderinfo;
-            for(int i=0; i<ordersdetail.size();i++){
-                orderinfo=ordersdetail.get(i);
-                tabledata[i][0]= String.valueOf(orderinfo.getOrderid());
-                tabledata[i][2] = orderinfo.getPrice();
-                tabledata[i][3]= orderinfo.getOrderdatetime();
-                tb.setDataAdapter(new SimpleTableDataAdapter(Track_orders.this,tabledata));
-            }
+          orderlist.setAdapter(new show_orders_adapter(ordersdetail,Track_orders.this));
         }
 
         @Override

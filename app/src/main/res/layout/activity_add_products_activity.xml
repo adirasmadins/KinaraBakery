@@ -12,6 +12,7 @@
         android:src="@drawable/upload"
         android:id="@+id/productimg"
         android:scaleType="centerCrop"
+
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -31,6 +32,7 @@
         android:inputType="textPersonName"
         android:hint="Enter Name for the product"
         android:ems="10"
+        android:textCursorDrawable="@null"
         android:id="@+id/productnametxt"
         android:layout_below="@+id/productimg"
         android:layout_alignParentStart="true"

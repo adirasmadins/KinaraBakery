@@ -220,6 +220,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (item.getItemId() == R.id.profile) {
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
                 startActivity(new Intent(MainActivity.this, customerprofileactivity.class), optionsCompat.toBundle());
+            }else if (item.getItemId()==R.id.track_orders){
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, Track_orders.class), optionsCompat.toBundle());
+            }else if(item.getItemId()==R.id.addproducts){
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+                startActivity(new Intent(MainActivity.this, add_products_activity.class), optionsCompat.toBundle());
             }
             return false;
         }
@@ -279,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            }else {
                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
                builder.setTitle("Kinara Bakery");
+               builder.setCancelable(false);
                builder.setMessage("You are not connected to the Network");
                builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                    @Override

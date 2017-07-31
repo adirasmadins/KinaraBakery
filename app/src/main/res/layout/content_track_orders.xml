@@ -7,12 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="usmanali.kinarabakery.Track_orders"
     tools:showIn="@layout/activity_track_orders">
-    <de.codecrafters.tableview.TableView
-                android:id="@+id/tableView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/colorPrimary"
-                 app:tableView_headerColor="@color/colorPrimary"
-                />
+   <android.support.v7.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/orderslist"
+       >
+
+   </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>

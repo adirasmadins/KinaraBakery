@@ -22,7 +22,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class add_products_activity extends AppCompatActivity implements View.OnClickListener {
-
     ImageView productimg;
     Button insertbtn;
     EditText price, name,quantity,catorgery;
