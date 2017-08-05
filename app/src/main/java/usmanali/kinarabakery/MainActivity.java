@@ -148,12 +148,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         methailist.setLayoutManager(layoutManager4);
         LinearLayoutManager layoutManager5 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         breadsandbunslist.setLayoutManager(layoutManager5);
+        grocerylist.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
         sp = new showproducts(MainActivity.this);
         sp.show_product_by_catorgery(Rusklist, MainActivity.this,"Rusks");
         sp.show_product_by_catorgery(Cakeslist, MainActivity.this,"Deserts");
         sp.show_all_products(productslist, MainActivity.this);
         sp.show_product_by_catorgery(methailist,MainActivity.this,"Methai");
         sp.show_product_by_catorgery(breadsandbunslist,MainActivity.this,"Breads & Buns");
+        sp.show_product_by_catorgery(grocerylist,MainActivity.this,"Grocery");
     }
 
 

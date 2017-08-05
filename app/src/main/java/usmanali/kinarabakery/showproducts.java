@@ -32,14 +32,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
     ArrayList<products> productsArrayList;
     Retrofit retrofit;
-    kinarabakeryservice service;
     Context context;
     public showproducts(Context context){
     productsArrayList=new ArrayList<products>();
-         service=apiclient.getClient().create(kinarabakeryservice.class);
         this.context=context;
     }
     public void show_all_products(final RecyclerView allproductslist, final Context con){
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
+
         Call<ArrayList<products>> call=service.getallproducts();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
@@ -55,6 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         });
     }
     public void get_product_by_catorgery(final RecyclerView productsbycatorgeryrecyclerview, final Context con, String Catorgery, final SearchView sv){
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<products>> call=service.getproductsbycatorgery(Catorgery);
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
@@ -82,7 +83,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
         });
     }
-    public  void fetch_all_products(final SearchView searchView, final RecyclerView allproductslist, final Context context){//for more products page
+    public  void fetch_all_products(final SearchView searchView, final RecyclerView allproductslist, final Context context){
+        //for more products page
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<products>> call=service.getallproducts();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
@@ -123,12 +126,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
         return productsincart;
     }
     public void show_product_by_catorgery(final RecyclerView productsbycatorgeryrecyclerview, final Context con, String Catorgery){
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<products>> call=service.getproductsbycatorgery(Catorgery);
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
             public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
                 ArrayList<products> productsbycatorgerylist= response.body();
-                productsbycatorgeryrecyclerview.setAdapter(new adapter(productsbycatorgerylist,con));
+                if(productsbycatorgerylist.size()>=0) {
+                    productsbycatorgeryrecyclerview.setAdapter(new adapter(productsbycatorgerylist, con));
+                }
             }
 
             @Override
