@@ -34,7 +34,7 @@ public class shoppingcartactivity extends AppCompatActivity {
     cartitemsadapter cartadapter;
     dbhelper mydb;
     Boolean Islogin;
-    String Username,phone,customername,Address,Email,DateTime;
+    String Username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +42,10 @@ public class shoppingcartactivity extends AppCompatActivity {
         ButterKnife.bind(this);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(shoppingcartactivity.this);
         Islogin = prefs.getBoolean("Islogin", false);
-        Username=prefs.getString("Username",null);
-        phone=prefs.getString("Phone",null);
-        customername=prefs.getString("Name",null);
-        Address=prefs.getString("Address",null);
-        Email=prefs.getString("Email",null);
+        Username = prefs.getString("Username", "Guest");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Shopping Cart");
-        Calendar calender=Calendar.getInstance();
-      DateTime= String.valueOf(calender.getTime());
         mydb=new dbhelper(shoppingcartactivity.this);
         cartlist.setLayoutManager(new LinearLayoutManager(shoppingcartactivity.this));
         cartadapter=new cartitemsadapter(new showproducts(shoppingcartactivity.this).show_products_in_cart(mydb,Username),shoppingcartactivity.this);
@@ -64,35 +58,7 @@ public class shoppingcartactivity extends AppCompatActivity {
         } else if(!Islogin)
                 Toast.makeText(shoppingcartactivity.this,"You are not logged in",Toast.LENGTH_LONG).show();
          else {
-            PopupMenu pum= new PopupMenu(shoppingcartactivity.this,checkoutbtn);
-            MenuInflater mi=getMenuInflater();
-            mi.inflate(R.menu.check_out_menu,pum.getMenu());
-            pum.show();
-            pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId()==R.id.cash_on_delivery) {
-                        //   SmsManager smssender= SmsManager.getDefault();
-                        Cursor res = mydb.get_products_in_cart(Username);
-                        if (res.getCount() == 0) {
-                        }
-                        StringBuffer sb = new StringBuffer();
-                        while (res.moveToNext()) {
-                            sb.append(res.getString(1) + " ");
-                            sb.append("x"+ res.getInt(4) + " "+"\n");
-                        }
-                        // smssender.sendTextMessage(
-                        //
-                        // "phone","Kinara Bakery","Dear "+customername+"\n"+"You have ordered "+"\n"+sb.toString()+"\n"+"You will recieve Order Soon",null,null);*/
-                        new placingorders().place_orders(customername, Username, Address, phone, Email, sb.toString(),String.valueOf(mydb.getTotalOfAmount(Username)), shoppingcartactivity.this,DateTime);
-                        new sendmail(shoppingcartactivity.this,Email,"Your Order has been Recieved","Dear "+customername+"\n"+"\n"+"You have ordered "+"\n"+"\n"+sb.toString()+"\n"+"\n"+"Your Total bill is Rs "+String.valueOf(mydb.getTotalOfAmount(Username))+"\n"+"You will recieve Order Soon").execute();
-                            mydb.delete_all(Username);
-                            startActivity(new Intent(shoppingcartactivity.this, MainActivity.class));
-                            finish();
-                    }
-                    return false;
-                }
-            });
+            startActivity(new Intent(shoppingcartactivity.this,Billing_Activity.class));
         }
     }
 

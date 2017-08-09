@@ -23,4 +23,5 @@
     </string>
     <string name="title_activity_customerprofileactivity">customerprofileactivity</string>
     <string name="title_activity_track_orders">Track_orders</string>
+    <string name="title_activity_billing_">Billing_Activity</string>
 </resources>
