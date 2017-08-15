@@ -52,7 +52,6 @@ public class showmoreproducts extends AppCompatActivity  {
         getSupportActionBar().setTitle(getIntent().getStringExtra("Catorgery"));
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menuitem,menu);

@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -27,25 +29,26 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class productdetailActivity extends AppCompatActivity {
-    String imageurl, productname, catorgery,id;
-    StringBuffer productinformation;
-     int quantity,price;
+    String imageurl,id;
+     int quantity,productprice;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.productimage)
     ImageView productimage;
-    @BindView(R.id.productinformation)
-    TextView productinfo;
+    @BindView(R.id.catorgery) TextView catorgery;
+    @BindView(R.id.weight) TextView weight;
+    @BindView(R.id.name)   TextView name;
+    @BindView(R.id.price)  TextView price;
+    @BindView(R.id.productid) TextView productid;
     @BindView(R.id.collapse_toolbar)
     CollapsingToolbarLayout ctl;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    ArrayList<products> productsArrayList;
     products p;
     Intent i;
     dbhelper mydb;
     Boolean Islogin;
-   String Username;
+   String Username,Weight,productname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,18 +61,17 @@ public class productdetailActivity extends AppCompatActivity {
         Islogin = prefs.getBoolean("Islogin", false);
         Username=prefs.getString("Username"," ");
         imageurl = getIntent().getStringExtra("productimage");
-        productname = getIntent().getStringExtra("name");
-        price = getIntent().getIntExtra("price",0);
-        catorgery=getIntent().getStringExtra("catorgery");
-        id=String.valueOf(getIntent().getIntExtra("Productid",0));
+        // Setting Values
+        name.setText(getIntent().getStringExtra("name"));
+        price.setText(String.valueOf("Rs"+getIntent().getIntExtra("price",0)));
+        catorgery.setText(getIntent().getStringExtra("catorgery"));
+        productid.setText(String.valueOf(getIntent().getIntExtra("Productid",0)));
         quantity=getIntent().getIntExtra("Quantity",1);
+        weight.setText(getIntent().getStringExtra("Weight"));
         Picasso.with(productdetailActivity.this).load(imageurl).into(productimage);
-        productinformation = new StringBuffer();
-        productinformation.append("ID                         "+id+"\n");
-        productinformation.append("Name                       " + productname + "\n");
-        productinformation.append("Price                      " + "Rs " + String.valueOf(price)+"\n");
-        productinformation.append("Catorgery                  "+ catorgery+"\n");
-        productinfo.setText(productinformation.toString());
+//
+        productprice=getIntent().getIntExtra("price",0);
+        productname=getIntent().getStringExtra("name");
         mydb = new dbhelper(productdetailActivity.this);
     }
 
@@ -87,7 +89,7 @@ public class productdetailActivity extends AppCompatActivity {
         quantityselectiondialog.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int Price = price * quantitypicker.getValue();
+                int Price = productprice * quantitypicker.getValue();
                 Boolean isinserted = mydb.insert_product_toshoppingcart(productname, Price, imageurl,quantitypicker.getValue(),Username);
                 if (isinserted) {
                     Toast.makeText(productdetailActivity.this, "Product Added to cart", Toast.LENGTH_LONG).show();

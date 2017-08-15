@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="usmanali.kinarabakery.signupactivity">
-
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -103,7 +102,6 @@
         android:id="@+id/textInputLayoutphone"
         android:padding="16dp"
         >
-
         <EditText
             android:id="@+id/etphone"
             android:layout_width="match_parent"
@@ -117,9 +115,7 @@
         android:layout_below="@+id/textInputLayoutphone"
         android:id="@+id/textInputLayoutaddress"
         android:padding="16dp"
-
         >
-
         <EditText
             android:id="@+id/etaddress"
             android:layout_width="match_parent"

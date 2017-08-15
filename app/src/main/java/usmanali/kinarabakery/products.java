@@ -10,6 +10,15 @@ import android.os.Parcelable;
 public class products  {
     String productname;
 
+    public String getWeight() {
+        return Weight;
+    }
+
+    public void setWeight(String weight) {
+        Weight = weight;
+    }
+
+    String Weight;
     public int getQuantity() {
         return quantity;
     }

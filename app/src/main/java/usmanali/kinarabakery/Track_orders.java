@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +45,11 @@ public void track(String Username){
         @Override
         public void onResponse(Call<ArrayList<orders>> call, Response<ArrayList<orders>> response) {
             ArrayList<orders> ordersdetail=response.body();
-          orderlist.setAdapter(new show_orders_adapter(ordersdetail,Track_orders.this));
+            if(ordersdetail.size()>0) {
+                orderlist.setAdapter(new show_orders_adapter(ordersdetail, Track_orders.this));
+            }else{
+                Toast.makeText(Track_orders.this,"No Order history found",Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override

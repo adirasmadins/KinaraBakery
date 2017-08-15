@@ -57,6 +57,7 @@ public class showmoreproductsadapter extends RecyclerView.Adapter<showmoreproduc
                 intent.putExtra("catorgery",product.getCatorgery());
                 intent.putExtra("Productid",product.getId());
                 intent.putExtra("Quantity",product.getQuantity());
+                intent.putExtra("Weight",product.getWeight());
                 context.startActivity(intent,optionsCompat.toBundle());
             }
         });
