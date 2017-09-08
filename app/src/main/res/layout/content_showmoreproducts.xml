@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
+    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="usmanali.kinarabakery.showmoreproducts"
     tools:showIn="@layout/activity_showmoreproducts">

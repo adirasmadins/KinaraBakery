@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.Image;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,9 @@ public class cartitemsadapter extends RecyclerView.Adapter<holder> {
             @Override
             public void onClick(View view) {
                 dbhelper mydb = new dbhelper(context);
+                new showproducts(context).increment_quantity(String.valueOf(p.getQuantity()),String.valueOf(p.getProduct_id()),context);
                 Integer rows = mydb.delete(String.valueOf(p.getId()));
                 if (rows > 0) {
-                    Toast.makeText(context,"Item Removed From Cart",Toast.LENGTH_LONG).show();
                     productsArrayList.remove(holder.getAdapterPosition());
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(holder.getAdapterPosition(),getItemCount());

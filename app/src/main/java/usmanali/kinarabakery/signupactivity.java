@@ -1,6 +1,7 @@
 package usmanali.kinarabakery;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
@@ -81,10 +82,15 @@ public class signupactivity extends AppCompatActivity {
     public  void signup(String name, String username, String password, String phone, String address, String Email, final Context context){
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<String> call=service.signup(name,username,password,phone,address,Email);
+        final ProgressDialog pd=new ProgressDialog(signupactivity.this);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String status=response.body();
+                pd.dismiss();
                 Toast.makeText(signupactivity.this,status,Toast.LENGTH_LONG).show();
                 if(status.equals("Registration Sucess")){
                     ActivityOptionsCompat optionsCompat =ActivityOptionsCompat.makeSceneTransitionAnimation(signupactivity.this,null);

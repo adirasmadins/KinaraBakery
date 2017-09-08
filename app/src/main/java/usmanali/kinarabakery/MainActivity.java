@@ -40,6 +40,8 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 import com.mikepenz.iconics.typeface.GenericFont;
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.methailist)
     RecyclerView methailist;
     @BindView(R.id.breadandbunslist) RecyclerView breadsandbunslist;
+    @BindView(R.id.fastfoodlist) RecyclerView fastfoodlist;
     @BindView(R.id.btnMore)
     Button btnmore;
     @BindView(R.id.moredeserts)
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.morebreadsandbuns)
     Button btnmore5;
     @BindView(R.id.moregrocery)Button btnmore6;
+    @BindView(R.id.morefastfood)Button btnmore7;
     @BindView(R.id.grocerylist) RecyclerView grocerylist;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -108,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nameofcustomer = prefs.getString("Name", "Guest");
         Username = prefs.getString("Username", "Guest");
         mydb = new dbhelper(MainActivity.this);
-
+        FirebaseMessaging.getInstance().subscribeToTopic("notifications");
+        FirebaseAnalytics.getInstance(this);
         nav_item_click();
         View header = nv.inflateHeaderView(R.layout.headerlayout);
         customername = (TextView) header.findViewById(R.id.name);
@@ -138,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnmore4.setOnClickListener(this);
         btnmore5.setOnClickListener(this);
         btnmore6.setOnClickListener(this);
+        btnmore7.setOnClickListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         productslist.setLayoutManager(layoutManager);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
@@ -149,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager5 = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         breadsandbunslist.setLayoutManager(layoutManager5);
         grocerylist.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
+        fastfoodlist.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
         sp = new showproducts(MainActivity.this);
         sp.show_product_by_catorgery(Rusklist, MainActivity.this,"Rusks");
         sp.show_product_by_catorgery(Cakeslist, MainActivity.this,"Deserts");
@@ -156,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sp.show_product_by_catorgery(methailist,MainActivity.this,"Methai");
         sp.show_product_by_catorgery(breadsandbunslist,MainActivity.this,"Breads & Buns");
         sp.show_product_by_catorgery(grocerylist,MainActivity.this,"Grocery");
+        sp.show_product_by_catorgery(fastfoodlist,MainActivity.this,"Fast Food");
     }
 
 
@@ -268,6 +276,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i = new Intent(MainActivity.this, showmoreproducts.class);
             i.putExtra("Catorgery", "Grocery");
             startActivity(i, optionsCompat.toBundle());
+        }else if(view.getId()==R.id.morefastfood){
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, null);
+            i = new Intent(MainActivity.this, showmoreproducts.class);
+            i.putExtra("Catorgery", "Fast Food");
+            startActivity(i, optionsCompat.toBundle());
         }
     }
 
@@ -291,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
            if(cm.getActiveNetworkInfo()!=null && cm.getActiveNetworkInfo().isConnected()){
-
            }else {
                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
                builder.setTitle("Kinara Bakery");
@@ -304,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                    }
                }).show();
            }
-
     }
 
 }

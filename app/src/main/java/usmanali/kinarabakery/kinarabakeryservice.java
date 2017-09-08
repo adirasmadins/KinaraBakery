@@ -17,10 +17,6 @@ import retrofit2.http.POST;
 public interface kinarabakeryservice {
     @GET("get_all_products.php")
     Call<ArrayList<products>> getallproducts();
-    @GET("get_rusk.php")
-    Call<ArrayList<products>> get_rusks();
-    @GET("get_deserts.php")
-    Call<ArrayList<products>> get_cakes();
     @FormUrlEncoded
     @POST("get_products_by_catorgery.php")
     Call<ArrayList<products>> getproductsbycatorgery(@Field("catorgery")String catorgery);
@@ -35,12 +31,18 @@ public interface kinarabakeryservice {
     Call<ArrayList<user>> login(@Field("Username")String Username,@Field("Password")String Password);
     @FormUrlEncoded
     @POST("insert_products_to_db.php")
-    Call<String> insertproducts(@Field("productname")String productname,@Field("price") String price,@Field("catorgery")String catorgery,@Field("quantity")String quantity,@Field("image")String image);
-    @GET("get_methai.php")
-    Call<ArrayList<products>> get_methai();
+    Call<String> insertproducts(@Field("productname")String productname,@Field("price") String price,@Field("catorgery")String catorgery,@Field("quantity")String quantity,@Field("image")String image,@Field("Weight")String product_weight);
     @FormUrlEncoded
     @POST("track_orders.php")
     Call<ArrayList<orders>> track_orders(@Field("Username")String Username);
-    @GET("getbreadandbuns.php")
-    Call<ArrayList<products>> get_breadsandbuns();
+    @FormUrlEncoded
+    @POST("edit_profile.php")
+    Call<String>edit_profile(@Field("Name")String name,@Field("Username")String username,@Field("Password")String password,@Field("Email")String Email,@Field("Address")String address,@Field("Phone")String phone,@Field("Id")String id);
+    @FormUrlEncoded
+    @POST("increment_quantity.php")
+    Call<String>increment_quantity(@Field("quantity")String quantity,@Field("productid")String productid);
+    @FormUrlEncoded
+    @POST("decrement_quantity.php")
+    Call<String>decrement_quantity(@Field("quantity")String quantity,@Field("productid")String productid);
+
 }

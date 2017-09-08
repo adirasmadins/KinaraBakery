@@ -3,6 +3,7 @@ package usmanali.kinarabakery;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -82,16 +83,17 @@ public class LoginActivity extends AppCompatActivity {
            else if (password.getText().toString().isEmpty())
                 textInputLayoutpassword.setError("Enter Password");
              else if (!Islogin){
-             customerlogin(username.getText().toString(),password.getText().toString());
+            customerlogin(username.getText().toString(),password.getText().toString());
             }else{
             Toast.makeText(LoginActivity.this,"You are already Logged in",Toast.LENGTH_LONG).show();
         }
         }
-    public void customerlogin(String Username,String password){
+    public void customerlogin(String Username, String password){
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<user>> call=service.login(Username,password);
         final ProgressDialog pd=new ProgressDialog(LoginActivity.this);
         pd.setMessage("Please Wait");
+        pd.setCancelable(false);
         pd.show();
         call.enqueue(new Callback<ArrayList<user>>() {
             @Override
@@ -107,10 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                     prefs.edit().putString("Email",userdata.get(0).getEmail()).commit();
                     prefs.edit().putString("Address",userdata.get(0).getAddress()).commit();
                     prefs.edit().putString("Phone",userdata.get(0).getPhone()).commit();
+                    prefs.edit().putString("Password",userdata.get(0).getPassword()).commit();
+                    prefs.edit().putInt("Id",userdata.get(0).getId()).commit();
                     ActivityOptionsCompat optionsCompat= ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this,null);
                     startActivity(new Intent(LoginActivity.this,MainActivity.class),optionsCompat.toBundle());
                     finish();
-
                 }else{
                     Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_LONG).show();
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);

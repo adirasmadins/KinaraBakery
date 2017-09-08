@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "335158446701",
+    "firebase_url": "https://kinara-bakery.firebaseio.com",
+    "project_id": "kinara-bakery",
+    "storage_bucket": "kinara-bakery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335158446701:android:55ed6b441cec7f2a",
+        "android_client_info": {
+          "package_name": "usmanali.kinarabakery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335158446701-b55525qop0nsfv2ajsi6t2bgg71e8oru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "usmanali.kinarabakery",
+            "certificate_hash": "22e3536d8d77c4d91345752435a1b583315da8a1"
+          }
+        },
+        {
+          "client_id": "335158446701-4q4dd97qm16ubhvqm7vp7m7tl6rjm0o5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR6W_UqD08-QpuLmzEyKak__YSv8ZkCdA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335158446701-4q4dd97qm16ubhvqm7vp7m7tl6rjm0o5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

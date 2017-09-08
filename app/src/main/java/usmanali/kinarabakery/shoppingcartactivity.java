@@ -61,6 +61,5 @@ public class shoppingcartactivity extends AppCompatActivity {
             startActivity(new Intent(shoppingcartactivity.this,Billing_Activity.class));
         }
     }
-
 }
 

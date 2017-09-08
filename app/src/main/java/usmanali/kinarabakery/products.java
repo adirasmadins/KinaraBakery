@@ -10,6 +10,15 @@ import android.os.Parcelable;
 public class products  {
     String productname;
 
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    int product_id;
     public String getWeight() {
         return Weight;
     }
@@ -61,12 +70,13 @@ public class products  {
 
 public products(){}
 
-    public products(String name,int price,int id,String image,int quantity){
+    public products(String name,int price,int id,String image,int quantity,int product_id){
         this.setProductname(name);
         this.setPrice(price);
         this.setId(id);
         this.setImage(image);
         this.setQuantity(quantity);
+        this.setProduct_id(product_id);
     }
 
 

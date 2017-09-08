@@ -1,5 +1,6 @@
 package usmanali.kinarabakery;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -39,7 +40,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
     }
     public void show_all_products(final RecyclerView allproductslist, final Context con){
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
-
         Call<ArrayList<products>> call=service.getallproducts();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
@@ -57,10 +57,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
     public void get_product_by_catorgery(final RecyclerView productsbycatorgeryrecyclerview, final Context con, String Catorgery, final SearchView sv){
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<products>> call=service.getproductsbycatorgery(Catorgery);
+        final ProgressDialog pd=new ProgressDialog(con);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
             public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
                 ArrayList<products> productsbycatorgerylist= response.body();
+                pd.dismiss();
                 final showmoreproductsadapter sma=new showmoreproductsadapter(productsbycatorgerylist,con);
                 productsbycatorgeryrecyclerview.setAdapter(sma);
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -87,10 +92,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
         //for more products page
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
         Call<ArrayList<products>> call=service.getallproducts();
+        final ProgressDialog pd=new ProgressDialog(context);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
         call.enqueue(new Callback<ArrayList<products>>() {
             @Override
             public void onResponse(Call<ArrayList<products>> call, Response<ArrayList<products>> response) {
                 ArrayList<products> allproducts=response.body();
+                pd.dismiss();
                 final showmoreproductsadapter sma=new showmoreproductsadapter(allproducts,context);
                 allproductslist.setAdapter(sma);
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -120,7 +130,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
             Toast.makeText(context,"No Products in Cart",Toast.LENGTH_LONG) .show();
         }
         while (res.moveToNext()) {
-            products p=new products(res.getString(1),res.getInt(2),res.getInt(0),res.getString(3),res.getInt(4));
+            products p=new products(res.getString(1),res.getInt(2),res.getInt(0),res.getString(3),res.getInt(4),res.getInt(6));
             productsincart.add(p);
         }
         return productsincart;
@@ -143,6 +153,44 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
         });
     }
+    public void increment_quantity(String quantity, String productid, final Context context){
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
+        Call<String> call=service.increment_quantity(quantity,productid);
+        final ProgressDialog pd=new ProgressDialog(context);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                pd.dismiss();
+                Toast.makeText(context, response.body(),Toast.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
 
+            }
+        });
+    }
+    public void decrement_quantity(String quantity, String productid, final Context context){
+        kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
+        Call<String> call=service.decrement_quantity(quantity,productid);
+        final ProgressDialog pd=new ProgressDialog(context);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                pd.dismiss();
+                Toast.makeText(context, response.body(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
 }

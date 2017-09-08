@@ -1,75 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="290dp"
-        android:src="@drawable/upload"
-        android:id="@+id/productimg"
-        android:scaleType="centerCrop"
-
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Insert Data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/upload_btn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Enter Name for the product"
-        android:ems="10"
-        android:textCursorDrawable="@null"
-        android:id="@+id/productnametxt"
-        android:layout_below="@+id/productimg"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:src="@drawable/upload"
+            android:id="@+id/productimg"
+            android:scaleType="centerCrop"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/pricetxt"
-        android:hint="Enter Price for product"
-        android:layout_below="@+id/productnametxt"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp" />
+        <Button
+            android:text="Insert Data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/upload_btn"
+            android:layout_margin="16dp"
+            android:layout_below="@+id/productcatorgeryselector"
+            />
 
-    <EditText
-        android:id="@+id/productquantitytxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/pricetxt"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="Enter Quantity"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Enter Name for the product"
+            android:id="@+id/productnametxt"
+            android:layout_below="@+id/productimg"
+            android:layout_margin="16dp" />
 
-    <EditText
-        android:id="@+id/productcatorgerytxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/upload_btn"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="9dp"
-        android:ems="10"
-        android:hint="Enter Catorgery"
-        android:inputType="textPersonName"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/pricetxt"
+            android:hint="Enter Price for product"
+            android:layout_below="@+id/productnametxt"
+            android:layout_margin="16dp" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/productquantitytxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pricetxt"
+            android:layout_margin="16dp"
+            android:hint="Enter Quantity"
+            />
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/productweighttxt"
+               android:layout_margin="16dp"
+               android:hint="Enter Product Weight"
+               android:layout_below="@+id/productquantitytxt"
+               />
+        <Spinner
+            android:id="@+id/productcatorgeryselector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:entries="@array/Catorgeries"
+            android:layout_below="@+id/productweighttxt"
+            />
+
+    </RelativeLayout>
+
+</ScrollView>

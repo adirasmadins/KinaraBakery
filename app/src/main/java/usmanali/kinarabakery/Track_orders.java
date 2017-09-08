@@ -1,5 +1,6 @@
 package usmanali.kinarabakery;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -35,16 +36,22 @@ public class Track_orders extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Track_orders.this);
         Username = prefs.getString("Username", "Guest");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Your Orders");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         orderlist.setLayoutManager(new GridLayoutManager(this,2));
         track(Username);
     }
 public void track(String Username){
     service=apiclient.getClient().create(kinarabakeryservice.class);
     Call<ArrayList<orders>> call =service.track_orders(Username);
+    final ProgressDialog pd=new ProgressDialog(Track_orders.this);
+    pd.setMessage("Please Wait");
+    pd.show();
     call.enqueue(new Callback<ArrayList<orders>>() {
         @Override
         public void onResponse(Call<ArrayList<orders>> call, Response<ArrayList<orders>> response) {
             ArrayList<orders> ordersdetail=response.body();
+            pd.dismiss();
             if(ordersdetail.size()>0) {
                 orderlist.setAdapter(new show_orders_adapter(ordersdetail, Track_orders.this));
             }else{

@@ -25,6 +25,7 @@
         </activity>
         <activity
             android:name=".productdetailActivity"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_productdetail"
             android:theme="@style/AppTheme" />
         <activity
@@ -53,6 +54,7 @@
         <activity
             android:name=".Track_orders"
             android:label="@string/title_activity_track_orders"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".Splash_Screen">
             <intent-filter>
@@ -64,7 +66,21 @@
         <activity
             android:name=".Billing_Activity"
             android:label="@string/title_activity_billing_"
-            android:theme="@style/AppTheme"></activity>
+            android:parentActivityName=".shoppingcartactivity"
+            android:theme="@style/AppTheme" />
+
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".Edit_Profile_Activity"
+            android:label="@string/title_activity_edit__profile_"
+            android:parentActivityName=".customerprofileactivity"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

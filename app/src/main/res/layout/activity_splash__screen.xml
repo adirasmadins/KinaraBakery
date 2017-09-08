@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff"
     tools:context="usmanali.kinarabakery.Splash_Screen">
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="fitXY"
     android:src="@drawable/logo"
     />
 </RelativeLayout>

@@ -49,6 +49,7 @@ public class productdetailActivity extends AppCompatActivity {
     dbhelper mydb;
     Boolean Islogin;
    String Username,Weight,productname;
+    int productsid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class productdetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        productsid=getIntent().getIntExtra("Productid",0);
         ctl.setTitle(" ");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(productdetailActivity.this);
         Islogin = prefs.getBoolean("Islogin", false);
@@ -65,11 +67,10 @@ public class productdetailActivity extends AppCompatActivity {
         name.setText(getIntent().getStringExtra("name"));
         price.setText(String.valueOf("Rs"+getIntent().getIntExtra("price",0)));
         catorgery.setText(getIntent().getStringExtra("catorgery"));
-        productid.setText(String.valueOf(getIntent().getIntExtra("Productid",0)));
+        productid.setText(String.valueOf(productsid));
         quantity=getIntent().getIntExtra("Quantity",1);
         weight.setText(getIntent().getStringExtra("Weight"));
         Picasso.with(productdetailActivity.this).load(imageurl).into(productimage);
-//
         productprice=getIntent().getIntExtra("price",0);
         productname=getIntent().getStringExtra("name");
         mydb = new dbhelper(productdetailActivity.this);
@@ -90,9 +91,9 @@ public class productdetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 int Price = productprice * quantitypicker.getValue();
-                Boolean isinserted = mydb.insert_product_toshoppingcart(productname, Price, imageurl,quantitypicker.getValue(),Username);
+                Boolean isinserted = mydb.insert_product_toshoppingcart(productname, Price, imageurl,quantitypicker.getValue(),Username,productsid);
                 if (isinserted) {
-                    Toast.makeText(productdetailActivity.this, "Product Added to cart", Toast.LENGTH_LONG).show();
+                    new showproducts(productdetailActivity.this).decrement_quantity(String.valueOf(quantitypicker.getValue()),String.valueOf(productsid),productdetailActivity.this);
                 } else {
                     Toast.makeText(productdetailActivity.this, "Product not Added to cart", Toast.LENGTH_LONG).show();
                 }
@@ -107,6 +108,7 @@ public class productdetailActivity extends AppCompatActivity {
             Toast.makeText(productdetailActivity.this,"You are not logged in",Toast.LENGTH_LONG).show();
         }
 }
+
 }
 
 

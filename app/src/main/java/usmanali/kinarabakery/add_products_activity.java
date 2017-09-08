@@ -1,5 +1,6 @@
 package usmanali.kinarabakery;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,33 +13,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class add_products_activity extends AppCompatActivity implements View.OnClickListener {
-    ImageView productimg;
-    Button insertbtn;
-    EditText price, name,quantity,catorgery;
+
     Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 100;
     private Uri filepath;
+    @BindView(R.id.productcatorgeryselector)Spinner catorgery;
+    @BindView(R.id.productimg) ImageView productimg;
+    @BindView(R.id.productnametxt) EditText name;
+    @BindView(R.id.pricetxt) EditText price;
+    @BindView(R.id.productquantitytxt) EditText quantity;
+    @BindView(R.id.productweighttxt) EditText productweight;
+    @BindView(R.id.upload_btn) Button insertbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_products_activity);
-        productimg = (ImageView) findViewById(R.id.productimg);
-        insertbtn = (Button) findViewById(R.id.upload_btn);
-        price = (EditText) findViewById(R.id.pricetxt);
-        name = (EditText) findViewById(R.id.productnametxt);
-        quantity=(EditText) findViewById(R.id.productquantitytxt);
-        catorgery=(EditText) findViewById(R.id.productcatorgerytxt);
+        ButterKnife.bind(this);
         insertbtn.setOnClickListener(this);
         productimg.setOnClickListener(this);
     }
@@ -83,20 +87,25 @@ public class add_products_activity extends AppCompatActivity implements View.OnC
         String productname=name.getText().toString();
         String productprice=price.getText().toString();
         String Quantity=quantity.getText().toString();
-        String Catorgery=catorgery.getText().toString();
+        String Catorgery=catorgery.getSelectedItem().toString();
+        String product_weight=productweight.getText().toString();
         kinarabakeryservice service=apiclient.getClient().create(kinarabakeryservice.class);
-        Call<String> call=service.insertproducts(productname,productprice,Catorgery,Quantity,encodedImage);
+        Call<String> call=service.insertproducts(productname,productprice,Catorgery,Quantity,encodedImage,product_weight);
+        final ProgressDialog pd=new ProgressDialog(add_products_activity.this);
+        pd.setMessage("Please Wait");
+        pd.setCancelable(false);
+        pd.show();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String status=response.body();
+                pd.dismiss();
                 Toast.makeText(add_products_activity.this,status,Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(add_products_activity.this,"product not inserted",Toast.LENGTH_LONG).show();
-                Log.e("insertproducts",t.toString());
+
             }
         });
     }

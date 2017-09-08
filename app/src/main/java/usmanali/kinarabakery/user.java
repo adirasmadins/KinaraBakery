@@ -63,6 +63,25 @@ String status;
     String Name;
     String Email;
     String Phone;
+    int Id;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    String Password;
 
     public String getAddress() {
         return Address;

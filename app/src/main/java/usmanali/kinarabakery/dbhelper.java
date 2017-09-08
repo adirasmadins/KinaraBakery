@@ -20,8 +20,8 @@ public class dbhelper extends SQLiteOpenHelper {
     Context c;
     String Table_Name="shoppingcart";
     String[] pricecolumn={"Sum(price)"};
-    String[] columns={"id","productname","price","image","quantity","Username"};
-    String creat_table="create table shoppingcart (id integer primary key autoincrement,productname text,price integer,image text,quantity integer,Username text);";
+    String[] columns={"id","productname","price","image","quantity","Username","productid"};
+    String creat_table="create table shoppingcart (id integer primary key autoincrement,productname text,price integer,image text,quantity integer,Username text,productid integer);";
     public dbhelper(Context context) {
         super(context,"shoppingcartdb", null, 1);
         this.c=context;
@@ -37,7 +37,7 @@ sqLiteDatabase.execSQL(creat_table);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS shoppingcart");
         onCreate(sqLiteDatabase);
     }
-    public Boolean insert_product_toshoppingcart(String productname,int price,String imageurl,int quantity,String Username){
+    public Boolean insert_product_toshoppingcart(String productname,int price,String imageurl,int quantity,String Username,int productid){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("productname ",productname);
@@ -45,6 +45,7 @@ sqLiteDatabase.execSQL(creat_table);
         cv.put("image",imageurl);
         cv.put("quantity",quantity);
         cv.put("Username",Username);
+        cv.put("productid",productid);
        long i= db.insert("shoppingcart",null,cv);
         if(i==-1){
             return false;
