@@ -44,5 +44,4 @@ public interface kinarabakeryservice {
     @FormUrlEncoded
     @POST("decrement_quantity.php")
     Call<String>decrement_quantity(@Field("quantity")String quantity,@Field("productid")String productid);
-
 }

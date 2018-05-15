@@ -23,12 +23,10 @@ public class sendmail extends AsyncTask {
     //Declaring Variables
     private Context context;
     private Session session;
-
     //Information to send email
     private String email;
     private String subject;
     private String message;
-
     //Class Constructor
     public sendmail(Context context, String email, String subject, String message){
         //Initializing variables

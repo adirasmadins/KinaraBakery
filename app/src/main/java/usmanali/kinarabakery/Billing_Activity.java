@@ -56,7 +56,6 @@ public class Billing_Activity extends AppCompatActivity {
               place_order_and_send_email();
             }
         });
-
     }
 
 public void place_order_and_send_email(){
